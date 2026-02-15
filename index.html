@@ -385,23 +385,37 @@ async function caricaRiepilogo() {
     const res = await fetch(API + "?action=list");
     const bookings = await res.json();
 
-    bookings.sort((a, b) => a.date.localeCompare(b.date));
-
-    let html = "";
-    let lastDate = "";
+    // Raggruppa per data
+    const grouped = {};
 
     bookings.forEach(b => {
-      if (b.date !== lastDate) {
-        html += `<div style="margin-top:20px; font-weight:bold; font-size:20px;">${formattaData(b.date)}</div>`;
-        lastDate = b.date;
-      }
+      if (!grouped[b.date]) grouped[b.date] = [];
+      grouped[b.date].push(b);
+    });
 
-      html += `
-        <div style="margin-left:10px; margin-bottom:18px;">
-          <strong>Post. ${b.postazione} - ${b.name}</strong><br>
-          dalle ${b.start} alle ${b.end}
-        </div>
-      `;
+    // Ordina le date
+    const dates = Object.keys(grouped).sort();
+
+    let html = "";
+
+    dates.forEach(date => {
+      // Titolo del giorno
+      html += `<div style="margin-top:20px; font-weight:bold; font-size:20px;">
+                 ${formattaData(date)}
+               </div>`;
+
+      // Ordina le prenotazioni del giorno per ora
+      grouped[date].sort((a, b) => a.start.localeCompare(b.start));
+
+      // Prenotazioni del giorno
+      grouped[date].forEach(b => {
+        html += `
+          <div style="margin-left:10px; margin-bottom:18px;">
+            <strong>Post. ${b.postazione} - ${b.name}</strong><br>
+            dalle ${b.start} alle ${b.end}
+          </div>
+        `;
+      });
     });
 
     document.getElementById("riepilogo").innerHTML = html;
@@ -411,6 +425,7 @@ async function caricaRiepilogo() {
       "<div style='font-size:3.6vw;color:#666;'>Errore caricamento riepilogo</div>";
   }
 }
+
 
 
   // Formatta data AAAA-MM-GG → GG Mese AAAA
@@ -645,4 +660,5 @@ async function caricaRiepilogo() {
 </div> <!-- fine #app -->
 </body>
 </html>
+
 
