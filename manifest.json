@@ -1,0 +1,15 @@
+{
+  "name": "Prenotazione Espositore",
+  "short_name": "Prenotazioni",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0066ff",
+  "theme_color": "#0066ff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
