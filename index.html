@@ -377,6 +377,9 @@
 <!-- SCRIPT RIEPILOGO -->
 <script>
 
+<!-- SCRIPT RIEPILOGO -->
+<script>
+
 // URL DELLA TUA WEB APP (NUOVO DEPLOYMENT)
 const API = "https://script.google.com/macros/s/AKfycbzhGU30LEanlT16rMYBFVacAuLvcoyv-YQpfjl4pYFlWtreY11LGURm_QTGXSKrJqdo/exec";
 
@@ -386,50 +389,46 @@ const API = "https://script.google.com/macros/s/AKfycbzhGU30LEanlT16rMYBFVacAuLv
  ******************************************************/
 async function caricaRiepilogo() {
   try {
-    // 1) Chiamata al server
     const res = await fetch(API + "?action=list");
 
-    // 2) Se la risposta NON è OK, mostriamo l’errore reale
     if (!res.ok) {
       const text = await res.text();
       console.error("Errore HTTP:", res.status, text);
       return;
     }
 
-    // 3) Convertiamo la risposta in JSON
     const bookings = await res.json();
-
-    // 4) Mostriamo cosa è arrivato dal server
     console.log("Bookings:", bookings);
 
-    // 5) Qui puoi richiamare la tua funzione che disegna il riepilogo
-    // renderRiepilogo(bookings);
+    // Disegna il riepilogo
+    renderRiepilogo(bookings);
 
   } catch (err) {
-    // 6) Errori di rete o URL sbagliato
     console.error("Errore fetch:", err);
+    document.getElementById("riepilogo").innerHTML =
+      "<div style='font-size:3.6vw;color:#666;'>Errore caricamento riepilogo</div>";
   }
 }
+
+/******************************************************
+ * renderRiepilogo()
+ * Mostra il riepilogo nella pagina
+ ******************************************************/
 function renderRiepilogo(bookings) {
-  // Raggruppa per data
   const grouped = {};
   bookings.forEach(b => {
     if (!grouped[b.date]) grouped[b.date] = [];
     grouped[b.date].push(b);
   });
 
-  // Ordina le date
   const dates = Object.keys(grouped).sort();
   let html = "";
 
   dates.forEach(date => {
-    // Titolo del giorno
     html += `<h3>${formattaData(date)}</h3>`;
 
-    // Ordina le prenotazioni del giorno per ora
     grouped[date].sort((a, b) => a.start.localeCompare(b.start));
 
-    // Prenotazioni del giorno
     grouped[date].forEach(b => {
       html += `
         <div class="booking">
@@ -440,27 +439,20 @@ function renderRiepilogo(bookings) {
     });
   });
 
-  // Inserisce il riepilogo nella pagina
   document.getElementById("riepilogo").innerHTML = html;
 }
 
-  } catch (err) {
-    document.getElementById("riepilogo").innerHTML =
-      "<div style='font-size:3.6vw;color:#666;'>Errore caricamento riepilogo</div>";
-  }
+/******************************************************
+ * formattaData()
+ ******************************************************/
+function formattaData(d) {
+  const mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
+  const [y, m, day] = d.split("-");
+  return `${parseInt(day)} ${mesi[parseInt(m)-1]} ${y}`;
 }
 
-  // Formatta data AAAA-MM-GG → GG Mese AAAA
-  function formattaData(d) {
-    const mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
-    const [y, m, day] = d.split("-");
-    return `${parseInt(day)} ${mesi[parseInt(m)-1]} ${y}`;
-  }
-
-  // Carica riepilogo all’avvio
-  renderRiepilogo(bookings);
-
 </script>
+
 
 <!-- SCRIPT PRINCIPALE -->
 <script>
@@ -682,6 +674,7 @@ function renderRiepilogo(bookings) {
 </div> <!-- fine #app -->
 </body>
 </html>
+
 
 
 
