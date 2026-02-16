@@ -410,40 +410,39 @@ async function caricaRiepilogo() {
     console.error("Errore fetch:", err);
   }
 }
-    // Raggruppa per data
-    const grouped = {};
+function renderRiepilogo(bookings) {
+  // Raggruppa per data
+  const grouped = {};
+  bookings.forEach(b => {
+    if (!grouped[b.date]) grouped[b.date] = [];
+    grouped[b.date].push(b);
+  });
 
-    bookings.forEach(b => {
-      if (!grouped[b.date]) grouped[b.date] = [];
-      grouped[b.date].push(b);
+  // Ordina le date
+  const dates = Object.keys(grouped).sort();
+  let html = "";
+
+  dates.forEach(date => {
+    // Titolo del giorno
+    html += `<h3>${formattaData(date)}</h3>`;
+
+    // Ordina le prenotazioni del giorno per ora
+    grouped[date].sort((a, b) => a.start.localeCompare(b.start));
+
+    // Prenotazioni del giorno
+    grouped[date].forEach(b => {
+      html += `
+        <div class="booking">
+          <strong>Post. ${b.postazione}</strong> - ${b.name}<br>
+          dalle ${b.start} alle ${b.end}
+        </div>
+      `;
     });
+  });
 
-    // Ordina le date
-    const dates = Object.keys(grouped).sort();
-
-    let html = "";
-
-    dates.forEach(date => {
-      // Titolo del giorno
-      html += `<div style="margin-top:20px; font-weight:bold; font-size:20px;">
-                 ${formattaData(date)}
-               </div>`;
-
-      // Ordina le prenotazioni del giorno per ora
-      grouped[date].sort((a, b) => a.start.localeCompare(b.start));
-
-      // Prenotazioni del giorno
-      grouped[date].forEach(b => {
-        html += `
-          <div style="margin-left:10px; margin-bottom:18px;">
-            <strong>Post. ${b.postazione} - ${b.name}</strong><br>
-            dalle ${b.start} alle ${b.end}
-          </div>
-        `;
-      });
-    });
-
-    document.getElementById("riepilogo").innerHTML = html;
+  // Inserisce il riepilogo nella pagina
+  document.getElementById("riepilogo").innerHTML = html;
+}
 
   } catch (err) {
     document.getElementById("riepilogo").innerHTML =
@@ -459,7 +458,7 @@ async function caricaRiepilogo() {
   }
 
   // Carica riepilogo all’avvio
-  caricaRiepilogo();
+  renderRiepilogo(bookings);
 
 </script>
 
@@ -683,6 +682,7 @@ async function caricaRiepilogo() {
 </div> <!-- fine #app -->
 </body>
 </html>
+
 
 
 
