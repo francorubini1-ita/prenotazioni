@@ -377,40 +377,41 @@
 <!-- SCRIPT RIEPILOGO -->
 <script>
 
+// URL DELLA TUA WEB APP (NUOVO DEPLOYMENT)
 const API = "https://script.google.com/macros/s/AKfycbzhGU30LEanlT16rMYBFVacAuLvcoyv-YQpfjl4pYFlWtreY11LGURm_QTGXSKrJqdo/exec";
 
-  // Carica l’elenco delle prenotazioni dal server
+/******************************************************
+ * caricaRiepilogo()
+ * Chiama la Web App e mostra il riepilogo
+ ******************************************************/
 async function caricaRiepilogo() {
   try {
-    // 1) Invia la richiesta alla tua Web App
-    //    Aggiungiamo ?action=list per chiedere l’elenco delle prenotazioni
+    // 1) Chiamata al server
     const res = await fetch(API + "?action=list");
 
-    // 2) Se la risposta NON è OK (es. 404, 500, HTML di errore…)
-    //    allora leggiamo il testo della risposta per capire cosa è successo
+    // 2) Se la risposta NON è OK, mostriamo l’errore reale
     if (!res.ok) {
-      const text = await res.text();   // <-- Legge l’errore vero
+      const text = await res.text();
       console.error("Errore HTTP:", res.status, text);
-      return; // Interrompe la funzione
+      return;
     }
 
-    // 3) Se la risposta è OK, proviamo a convertirla in JSON
-    //    (se la Web App non restituisce JSON valido, qui esplode)
+    // 3) Convertiamo la risposta in JSON
     const bookings = await res.json();
 
-    // 4) Mostriamo nel log cosa è arrivato dal server
+    // 4) Mostriamo cosa è arrivato dal server
     console.log("Bookings:", bookings);
 
-    // 5) Qui continua il tuo codice originale per popolare il riepilogo
-    //    (lo lasci com’è)
+    // 5) Qui puoi richiamare la tua funzione che disegna il riepilogo
     // renderRiepilogo(bookings);
 
   } catch (err) {
-    // 6) Se fetch fallisce (es. URL sbagliato, rete, CORS…)
-    //    lo vediamo qui
+    // 6) Errori di rete o URL sbagliato
     console.error("Errore fetch:", err);
   }
+}
 
+</script>
 
     // Raggruppa per data
     const grouped = {};
@@ -685,6 +686,7 @@ async function caricaRiepilogo() {
 </div> <!-- fine #app -->
 </body>
 </html>
+
 
 
 
