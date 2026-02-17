@@ -1,7 +1,7 @@
 /* =====================================================
    URL DELLA WEB APP
 ===================================================== */
-const API = "const API = "https://script.google.com/macros/s/AKfycbx7T_tfUmqL_xSlP-MCXjo9gW9XftTaowynlr2ZDZHnLteo_uKMi-fLPrURo3OfNrEb/exec";
+const API = "https://script.google.com/macros/s/AKfycbx7T_tfUmqL_xSlP-MCXjo9gW9XftTaowynlr2ZDZHnLteo_uKMi-fLPrURo3OfNrEb/exec";
 /* =====================================================
    RIFERIMENTI AGLI ELEMENTI DEL DOM
 ===================================================== */
