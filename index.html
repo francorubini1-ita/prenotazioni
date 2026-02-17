@@ -21,245 +21,16 @@
   <!-- Viewport mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    /* Variabili CSS per dimensioni e colori */
-    :root {
-      --label-size: 5vw;
-      --input-size: 4vw;
-      --input-padding: 3vw;
-      --button-size: 4.2vw;
-      --status-size: 4vw;
-
-      --primary: #0066ff;
-      --success: #00b36b;
-      --bg: #f5f7fa;
-      --card-bg: #ffffff;
-      --text: #222;
-      --radius: 14px;
-      --shadow: 0 6px 18px rgba(0,0,0,0.12);
-
-      --ios-border: #d1d1d6;
-    }
-
-    /* Tema scuro automatico */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1c1c1e;
-        --card-bg: #2c2c2e;
-        --text: #f2f2f7;
-        --shadow: 0 6px 18px rgba(0,0,0,0.6);
-        --ios-border: #3a3a3c;
-      }
-    }
-
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    #app {
-      height: 100vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .app-header {
-      background: var(--primary);
-      color: white;
-      padding: 4vw;
-      font-size: 6vw;
-      font-weight: 700;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-    }
-
-    .card {
-      background: var(--card-bg);
-      margin: 4vw;
-      padding: 4vw;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--ios-border);
-    }
-
-    .field { margin-bottom: 6vw; }
-    .field-label {
-      display: block;
-      font-size: var(--label-size);
-      font-weight: 700;
-      margin-bottom: 2vw;
-    }
-
-    .field-input {
-      width: 100%;
-      padding: var(--input-padding);
-      font-size: var(--input-size);
-      border-radius: var(--radius);
-      border: 1px solid var(--ios-border);
-      background: var(--card-bg);
-      color: var(--text);
-      box-sizing: border-box;
-    }
-
-    .time-row { display: flex; gap: 4vw; }
-    .time-col { flex: 1; }
-    .time-inner { display: flex; align-items: center; gap: 2vw; }
-
-    button {
-      position: relative;
-      overflow: hidden;
-      background: var(--primary);
-      color: white;
-      border-radius: var(--radius);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-      transition: 0.15s ease;
-      border: none;
-      padding: 3.5vw;
-      font-size: var(--button-size);
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button.secondary { background: #ccc; color: #111; }
-    #send { background: var(--success); }
-    #send:disabled { background: #9acfb8; cursor: not-allowed; }
-
-    button:active {
-      transform: translateY(1px) scale(0.98);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
-    }
-
-    button::after {
-      content: "";
-      position: absolute;
-      left: var(--ripple-x, 50%);
-      top: var(--ripple-y, 50%);
-      width: 10px;
-      height: 10px;
-      background: rgba(255,255,255,0.45);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.6s;
-    }
-
-    button.ripple-active::after {
-      transform: translate(-50%, -50%) scale(60);
-      opacity: 1;
-    }
-
-    #formContainer {
-      background: #000;
-      color: #fff;
-      padding: 4vw;
-      margin: 4vw;
-      border: 1px solid var(--ios-border);
-      border-radius: 12px;
-      overflow: visible;
-      height: auto;
-    }
-
-    #check { margin-bottom: 4vw; }
-    #send { margin-top: 2vw; }
-
-    #status {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 3vw;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      display: none;
-      pointer-events: none;
-      z-index: 9999;
-      text-align: center;
-      font-size: var(--status-size);
-    }
-
-    .icon { font-size: 8vw; }
-
-    #detailsPanel, #suggestions {
-      margin-top: 4vw;
-      padding: 4vw;
-      background: #1c1c1e;
-      border-radius: var(--radius);
-      font-size: 4vw;
-      display: none;
-      border: 1px solid var(--ios-border);
-    }
-
-    .suggest-btn {
-      display: inline-block;
-      margin: 6px 6px 0 0;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: #fff;
-      border: 1px solid #ddd;
-      font-size: 3.8vw;
-      cursor: pointer;
-    }
-
-    #confirmModal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-
-    #confirmBox {
-      background: var(--card-bg);
-      padding: 5vw;
-      width: 90%;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-      font-size: 4vw;
-      border: 1px solid var(--ios-border);
-    }
-
-    #loadingOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      color: white;
-      font-size: 6vw;
-      font-weight: bold;
-      backdrop-filter: blur(3px);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-
-    #loadingOverlay.show { display: flex; opacity: 1; }
-
-    #riepilogo { margin: 0 4vw 6vw 4vw; }
-
-    .update-wrap { padding: 0 4vw; margin-bottom: 4vw; }
-  </style>
+  <!-- CSS ESTERNO -->
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 <div id="app">
 
   <div class="app-header">Prenotazione Espositore</div>
 
+  <!-- FORM PRINCIPALE -->
   <div class="card">
 
     <div class="field">
@@ -269,17 +40,17 @@
 
     <div class="field time-row">
       <div class="time-col">
-        <label class="field-label" for="start" style="font-size:4vw;">Inizio</label>
+        <label class="field-label" for="start">Inizio</label>
         <div class="time-inner">
-          <span style="font-size:6vw;">⏱</span>
+          <span class="emoji">⏱</span>
           <input class="field-input" type="time" id="start">
         </div>
       </div>
 
       <div class="time-col">
-        <label class="field-label" for="end" style="font-size:4vw;">Fine</label>
+        <label class="field-label" for="end">Fine</label>
         <div class="time-inner">
-          <span style="font-size:6vw;">⏱</span>
+          <span class="emoji">⏱</span>
           <input class="field-input" type="time" id="end">
         </div>
       </div>
@@ -306,11 +77,13 @@
 
   </div>
 
+  <!-- STATUS -->
   <div id="status">
     <span id="icon" class="icon"></span>
     <span id="msg"></span>
   </div>
 
+  <!-- PANNELLI -->
   <div id="formContainer">
 
     <div id="detailsPanel">
@@ -328,7 +101,8 @@
 
   </div>
 
-  <h3 style="margin-left:4vw;">Riepilogo prenotazioni</h3>
+  <!-- RIEPILOGO -->
+  <h3 class="title">Riepilogo prenotazioni</h3>
 
   <div class="update-wrap">
     <button onclick="caricaRiepilogo()">Aggiorna</button>
@@ -336,303 +110,22 @@
 
   <div id="riepilogo"></div>
 
-  <!-- MODALE DI CONFERMA -->
+  <!-- MODALE -->
   <div id="confirmModal">
     <div id="confirmBox">
-      <p id="confirmText" style="margin-bottom: 4vw; font-size: 4.5vw;"></p>
-
-      <button id="confirmYes" style="margin-bottom: 3vw; background: var(--success);">
-        Conferma
-      </button>
-
-      <button id="confirmNo" class="secondary">
-        Annulla
-      </button>
+      <p id="confirmText"></p>
+      <button id="confirmYes" class="yes">Conferma</button>
+      <button id="confirmNo" class="secondary">Annulla</button>
     </div>
   </div>
 
+  <!-- OVERLAY -->
   <div id="loadingOverlay">Prenotazione inviata…</div>
 
 </div>
 
+<!-- JS ESTERNO -->
+<script src="app.js"></script>
 
-<!-- SCRIPT COMPLETO -->
-<script>
-
-/* URL DELLA WEB APP */
-const API = "https://script.google.com/macros/s/AKfycbzhGU30LEanlT16rMYBFVacAuLvcoyv-YQpfjl4pYFlWtreY11LGURm_QTGXSKrJqdo/exec";
-
-/* Riferimenti elementi */
-const checkBtn = document.getElementById("check");
-const sendBtn = document.getElementById("send");
-const statusBox = document.getElementById("status");
-const icon = document.getElementById("icon");
-const msg = document.getElementById("msg");
-const detailsPanel = document.getElementById("detailsPanel");
-const conflictList = document.getElementById("conflictList");
-const suggestionsDiv = document.getElementById("suggestions");
-const suggestList = document.getElementById("suggestList");
-const confirmModal = document.getElementById("confirmModal");
-const confirmText = document.getElementById("confirmText");
-const confirmYes = document.getElementById("confirmYes");
-const confirmNo = document.getElementById("confirmNo");
-
-/* CLICK SU "CONTROLLA DISPONIBILITÀ" */
-checkBtn.onclick = async () => {
-  document.activeElement.blur();
-
-  const date = document.getElementById("date").value;
-  const start = document.getElementById("start").value;
-  const end = document.getElementById("end").value;
-
-  if (!date || !start || !end) {
-    alert("Compila la data e gli orari");
-    return;
-  }
-
-  statusBox.style.display = "flex";
-  icon.textContent = "⏳";
-  msg.textContent = "Controllo...";
-
-  detailsPanel.style.display = "none";
-  suggestionsDiv.style.display = "none";
-  conflictList.innerHTML = "";
-  suggestList.innerHTML = "";
-
-  try {
-    const res = await fetch(`${API}?action=check&date=${date}&start=${start}&end=${end}`);
-    const data = await res.json();
-    handleCheck(data);
-  } catch (e) {
-    icon.textContent = "⚠️";
-    msg.textContent = "Errore server";
-  }
-};
-
-/* GESTIONE RISPOSTA CONTROLLO */
-function handleCheck(res) {
-
-  if (!res || res.error) {
-    icon.textContent = "⚠️";
-    msg.textContent = res?.error || "Errore";
-    sendBtn.disabled = true;
-    return;
-  }
-
-  if (res.ok) {
-    icon.textContent = "✅";
-    msg.textContent = "Orario disponibile";
-    sendBtn.disabled = false;
-    return;
-  }
-
-  icon.textContent = "❌";
-  msg.textContent = "Sovrapposizione";
-  sendBtn.disabled = true;
-
-  detailsPanel.style.display = "block";
-  conflictList.innerHTML = "";
-
-  (res.with || []).forEach(c => {
-    const li = document.createElement("li");
-    li.textContent = `${c.name} — ${c.start}–${c.end}`;
-    conflictList.appendChild(li);
-  });
-
-  suggestionsDiv.style.display = "block";
-  suggestList.innerHTML = "";
-
-  (res.suggestions || []).forEach(s => {
-    const btn = document.createElement("button");
-    btn.className = "suggest-btn";
-    btn.textContent = `${s.start}–${s.end}`;
-
-    btn.onclick = () => {
-      document.getElementById("start").value = s.start;
-      document.getElementById("end").value = s.end;
-      suggestionsDiv.style.display = "none";
-      checkBtn.click();
-    };
-
-    suggestList.appendChild(btn);
-  });
-}
-
-/* CLICK SU "INVIA UNA PRENOTAZIONE" */
-sendBtn.onclick = () => {
-
-  const date = document.getElementById("date").value;
-  const start = document.getElementById("start").value;
-  const end = document.getElementById("end").value;
-  const name = document.getElementById("name").value;
-  const postazione = document.getElementById("postazione").value;
-
-  confirmText.textContent =
-    `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
-
-  confirmModal.style.display = "flex";
-};
-
-/* CHIUSURA MODALE */
-confirmNo.onclick = () => {
-  confirmModal.style.display = "none";
-};
-
-/* CONFERMA INVIO PRENOTAZIONE */
-confirmYes.onclick = async () => {
-  confirmYes.disabled = true;
-  confirmYes.style.opacity = "0.5";
-  confirmModal.style.display = "none";
-
-  const data = {
-    action: "submit",
-    date: document.getElementById("date").value,
-    start: document.getElementById("start").value,
-    end: document.getElementById("end").value,
-    name: document.getElementById("name").value,
-    postazione: document.getElementById("postazione").value
-  };
-
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      body: JSON.stringify(data)
-    });
-
-    const r = await res.json();
-
-    if (r.success) {
-      if (navigator.vibrate) navigator.vibrate(30);
-
-      const overlay = document.getElementById("loadingOverlay");
-      overlay.style.display = "flex";
-      overlay.style.pointerEvents = "auto";
-      setTimeout(() => overlay.classList.add("show"), 20);
-
-      setTimeout(() => {
-        overlay.classList.remove("show");
-        overlay.style.display = "none";
-        overlay.style.pointerEvents = "none";
-        window.location.reload();
-      }, 1200);
-
-    } else {
-      alert("Errore: " + r.error);
-      confirmYes.disabled = false;
-      confirmYes.style.opacity = "1";
-    }
-
-  } catch (e) {
-    alert("Errore di rete");
-    confirmYes.disabled = false;
-    confirmYes.style.opacity = "1";
-  }
-};
-
-/* RIPPLE + VIBRAZIONE */
-document.querySelectorAll("button").forEach(btn => {
-  btn.addEventListener("click", function(e) {
-
-    if (navigator.vibrate) navigator.vibrate(15);
-
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    btn.style.setProperty("--ripple-x", `${x}px`);
-    btn.style.setProperty("--ripple-y", `${y}px`);
-
-    btn.classList.remove("ripple-active");
-
-    setTimeout(() => btn.classList.remove("ripple-active"), 500);
-  });
-});
-
-/* REGISTRA SERVICE WORKER */
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("?sw");
-}
-
-/* SCROLL AUTOMATICO AL RIEPILOGO DOPO RELOAD */
-window.addEventListener("load", () => {
-  if (window.location.hash === "#riepilogo") {
-    const section = document.getElementById("riepilogo");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-});
-
-/******************************************************
- * caricaRiepilogo()
- ******************************************************/
-async function caricaRiepilogo() {
-  try {
-    const res = await fetch(API + "?action=list");
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Errore HTTP:", res.status, text);
-      document.getElementById("riepilogo").innerHTML =
-        "<div style='font-size:4vw;color:#666;'>Errore nel caricamento</div>";
-      return;
-    }
-
-    const bookings = await res.json();
-    console.log("Bookings:", bookings);
-
-    renderRiepilogo(bookings);
-
-  } catch (err) {
-    console.error("Errore fetch:", err);
-    document.getElementById("riepilogo").innerHTML =
-      "<div style='font-size:4vw;color:#666;'>Errore di connessione</div>";
-  }
-}
-
-/******************************************************
- * renderRiepilogo()
- ******************************************************/
-function renderRiepilogo(bookings) {
-  const grouped = {};
-
-  bookings.forEach(b => {
-    if (!grouped[b.date]) grouped[b.date] = [];
-    grouped[b.date].push(b);
-  });
-
-  const dates = Object.keys(grouped).sort();
-  let html = "";
-
-  dates.forEach(date => {
-    html += `<h3>${formattaData(date)}</h3>`;
-
-    grouped[date].sort((a, b) => a.start.localeCompare(b.start));
-
-    grouped[date].forEach(b => {
-      html += `
-        <div class="booking">
-          <strong>Post. ${b.postazione}</strong> - ${b.name}<br>
-          dalle ${b.start} alle ${b.end}
-        </div>
-      `;
-    });
-  });
-
-  document.getElementById("riepilogo").innerHTML = html;
-}
-
-/******************************************************
- * formattaData()
- ******************************************************/
-function formattaData(d) {
-  const mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
-  const [y, m, day] = d.split("-");
-  return `${parseInt(day)} ${mesi[parseInt(m)-1]} ${y}`;
-}
-
-</script>
-
-</div> <!-- fine #app -->
 </body>
 </html>
