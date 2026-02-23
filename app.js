@@ -88,22 +88,45 @@ function handleCheck(res) {
   });
 
   suggestionsDiv.style.display = "block";
-  suggestList.innerHTML = "";
+  suggestList.innerHTML = `
+   <div style="
+     font-size: 5vw;
+     font-weight: 700;
+     color: #ffcc00;
+     margin-bottom: 4vw;
+   ">
 
-  (res.suggestions || []).forEach(s => {
-    const btn = document.createElement("button");
-    btn.className = "suggest-btn";
-    btn.textContent = `${s.start}–${s.end}`;
+     // Modifica il tuo orario di richiesta
+   </div>
 
-    btn.onclick = () => {
-      document.getElementById("start").value = s.start;
-      document.getElementById("end").value = s.end;
-      suggestionsDiv.style.display = "none";
-      checkBtn.click();
-    };
+   <button id="backToForm" style="
+     padding: 3vw 4vw;
+     font-size: 4.2vw;
+     font-weight: 600;
+     border-radius: 12px;
+     background: var(--primary);
+     color: white;
+     border: none;
+     width: 100%;
+     cursor: pointer;
+   ">
 
-    suggestList.appendChild(btn);
+     // Ritorna alla prenotazione
+   </button>
+  `;
+
+   document.getElementById("backToForm").onclick = () => {
+     suggestionsDiv.style.display = "none";
+     detailsPanel.style.display = "none";
+
+  // Scroll morbido verso il form
+  document.getElementById("formContainer").scrollIntoView({
+    behavior: "smooth"
   });
+};
+
+
+   
 }
 
 /* =====================================================
