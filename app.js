@@ -34,7 +34,7 @@ checkBtn.onclick = async () => {
     return;
   }
 
-  statusBox.style.display = "flex";
+  statusBox.classList.add("show");
   icon.textContent = "⏳";
   msg.textContent = "Controllo...";
 
@@ -57,6 +57,8 @@ checkBtn.onclick = async () => {
    GESTIONE RISPOSTA CONTROLLO
 ===================================================== */
 function handleCheck(res) {
+
+   statusBox.classList.remove("show");
 
   if (!res || res.error) {
     icon.textContent = "⚠️";
