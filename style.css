@@ -168,6 +168,10 @@ button.ripple-active::after {
   /* Animazione morbida */
   opacity: 0;
   transition: opacity 0.25s ease;
+
+   /* RIMUOVI inset: 0; */ 
+  width: auto; /* evita che si espanda */ 
+  height: auto;
 }
 
 #status.show {
