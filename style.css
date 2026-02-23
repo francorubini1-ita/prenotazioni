@@ -35,16 +35,11 @@
 =========================== */
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
   background: var(--bg);
   color: var(--text);
-}
-
-#app {
-  height: 100vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .app-header {
@@ -155,13 +150,13 @@ button.ripple-active::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
-  padding: 5vw 7vw;
-  background: rgba(0,0,0,0.75);
+
+  padding: 4vw 6vw;
+  background: rgba(0,0,0,0.65);
   color: white;
 
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 
   display: none;
   pointer-events: none;
@@ -169,6 +164,15 @@ button.ripple-active::after {
 
   text-align: center;
   font-size: var(--status-size);
+
+  /* Animazione morbida */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+#status.show {
+  display: block;
+  opacity: 1;
 }
 
 #status .icon {
