@@ -155,20 +155,28 @@ button.ripple-active::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 4vw 6vw;
+  
+  padding: 5vw 7vw;
   background: rgba(0,0,0,0.75);
   color: white;
+
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+
   display: none;
   pointer-events: none;
   z-index: 9999;
+
   text-align: center;
   font-size: var(--status-size);
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
+#status .icon {
+  font-size: 10vw;
+  display: block;
+  margin-bottom: 2vw;
+}
 
-.icon { font-size: 8vw; }
 
 /* ===========================
    PANNELLI
