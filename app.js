@@ -287,3 +287,8 @@ function formattaData(d) {
   const [y, m, day] = d.split("-");
   return `${parseInt(day)} ${mesi[parseInt(m)-1]} ${y}`;
 }
+
+/* =====================================================
+   CARICAMENTO AUTOMATICO RIEPILOGO
+===================================================== */
+window.addEventListener("load", caricaRiepilogo);\nwindow.addEventListener("load", caricaRiepilogo);
