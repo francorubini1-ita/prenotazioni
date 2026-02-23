@@ -152,18 +152,21 @@ button.ripple-active::after {
 =========================== */
 #status {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 3vw;
-  background: rgba(0,0,0,0.7);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4vw 6vw;
+  background: rgba(0,0,0,0.75);
   color: white;
   display: none;
   pointer-events: none;
   z-index: 9999;
   text-align: center;
   font-size: var(--status-size);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
+
 
 .icon { font-size: 8vw; }
 
