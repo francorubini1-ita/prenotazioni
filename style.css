@@ -194,10 +194,12 @@ button.ripple-active::after {
   margin: 6px 6px 0 0;
   padding: 10px 14px;
   border-radius: 10px;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: #ffeb3b; /* giallo visibile */
+  border: 1px solid #c9b200;
   font-size: 3.8vw;
   cursor: pointer;
+  color: #000;
+  font-weight: 600;
 }
 
 /* ===========================
