@@ -95,8 +95,7 @@ function handleCheck(res) {
      color: #ffcc00;
      margin-bottom: 4vw;
    ">
-
-     Modifica il tuo orario di richiesta
+   Modifica il tuo orario di richiesta
    </div>
 
    <button id="backToForm" style="
@@ -110,8 +109,7 @@ function handleCheck(res) {
      width: 100%;
      cursor: pointer;
    ">
-
-     Ritorna alla prenotazione
+   Ritorna alla prenotazione
    </button>
   `;
 
