@@ -57,7 +57,6 @@ checkBtn.onclick = async () => {
    GESTIONE RISPOSTA CONTROLLO
 ===================================================== */
 function handleCheck(res) {
-
    statusBox.classList.remove("show");
 
   if (!res || res.error) {
@@ -189,7 +188,7 @@ confirmYes.onclick = async () => {
         overlay.style.display = "none";
         overlay.style.pointerEvents = "none";
         window.location.reload();
-      }, 1200);
+      }, 3000);
 
     } else {
       alert("Errore: " + r.error);
