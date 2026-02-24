@@ -18,8 +18,9 @@ const POSTAZIONI = [
 ];
 
 function mapLink(lat, lon) {
-  return `https://www.google.com/maps?q=${lat},${lon}`;
+  return `https://www.google.com/maps/@${lat},${lon},20z`;
 }
+
 
 /* =====================================================
    RIFERIMENTI AGLI ELEMENTI DEL DOM
