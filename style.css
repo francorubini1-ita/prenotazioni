@@ -171,16 +171,14 @@ button.secondary {
 
 /* MENU POSTAZIONI */
 #postazioniMenu {
-  position: absolute;   /* ← ora fa parte del body */
-  top: 0;
-  right: -100%;
-  width: 80vw;
+  position: static;   /* ← ora è un elemento normale */
+  width: 100%;
   background: #fff;
   padding: 4vw;
-  border-left: 1px solid #ccc;
-  transition: right 0.35s ease;
-  z-index: 9999;
+  border-top: 1px solid #ccc;
+  display: none;      /* ← lo mostri/nascondi via JS */
 }
+
 
 #postazioniMenu.show {
   right: 0;
