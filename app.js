@@ -1,7 +1,26 @@
 /* =====================================================
    URL DELLA WEB APP
 ===================================================== */
-const API =  "https://script.google.com/macros/s/AKfycbw1PkamNFSLC_VTRaNZh8FVkYmqgGx2rTkWykn4bM5eMJeODC4bHMNo73UmoZyRpx5n/exec";   //"https://script.google.com/macros/s/AKfycbx7T_tfUmqL_xSlP-MCXjo9gW9XftTaowynlr2ZDZHnLteo_uKMi-fLPrURo3OfNrEb/exec";
+const API = "https://script.google.com/macros/s/AKfycbw1PkamNFSLC_VTRaNZh8FVkYmqgGx2rTkWykn4bM5eMJeODC4bHMNo73UmoZyRpx5n/exec";
+
+/* =====================================================
+   POSTAZIONI + LINK MAPPA
+===================================================== */
+const POSTAZIONI = [
+  { id: 1, nome: "Postazione 1", lat: 44.00000, lon: 11.00000 },
+  { id: 2, nome: "Postazione 2", lat: 44.00000, lon: 11.00000 },
+  { id: 3, nome: "Postazione 3", lat: 44.00000, lon: 11.00000 },
+  { id: 4, nome: "Postazione 4", lat: 44.00000, lon: 11.00000 },
+  { id: 5, nome: "Postazione 5", lat: 44.00000, lon: 11.00000 },
+  { id: 6, nome: "Postazione 6", lat: 44.00000, lon: 11.00000 },
+  { id: 7, nome: "Postazione 7", lat: 44.00000, lon: 11.00000 },
+  { id: 8, nome: "Postazione 8", lat: 44.00000, lon: 11.00000 }
+];
+
+function mapLink(lat, lon) {
+  return `https://www.google.com/maps?q=${lat},${lon}`;
+}
+
 /* =====================================================
    RIFERIMENTI AGLI ELEMENTI DEL DOM
 ===================================================== */
@@ -18,6 +37,31 @@ const confirmModal = document.getElementById("confirmModal");
 const confirmText = document.getElementById("confirmText");
 const confirmYes = document.getElementById("confirmYes");
 const confirmNo = document.getElementById("confirmNo");
+const loadingOverlay = document.getElementById("loadingOverlay");
+
+/* =====================================================
+   FUNZIONE DI RESET UI
+===================================================== */
+function resetUI() {
+  statusBox.classList.remove("show");
+  icon.textContent = "";
+  msg.textContent = "";
+
+  detailsPanel.style.display = "none";
+  suggestionsDiv.style.display = "none";
+  conflictList.innerHTML = "";
+  suggestList.innerHTML = "";
+
+  confirmModal.style.display = "none";
+  confirmYes.disabled = false;
+  confirmYes.style.opacity = "1";
+
+  loadingOverlay.classList.remove("show");
+  loadingOverlay.style.display = "none";
+  loadingOverlay.style.pointerEvents = "none";
+
+  sendBtn.disabled = true;
+}
 
 /* =====================================================
    CONTROLLO DISPONIBILITÀ
@@ -34,14 +78,11 @@ checkBtn.onclick = async () => {
     return;
   }
 
+  resetUI();
+
   statusBox.classList.add("show");
   icon.textContent = "⏳";
   msg.textContent = "Controllo...";
-
-  detailsPanel.style.display = "none";
-  suggestionsDiv.style.display = "none";
-  conflictList.innerHTML = "";
-  suggestList.innerHTML = "";
 
   try {
     const res = await fetch(`${API}?action=check&date=${date}&start=${start}&end=${end}`);
@@ -50,6 +91,8 @@ checkBtn.onclick = async () => {
   } catch (e) {
     icon.textContent = "⚠️";
     msg.textContent = "Errore server";
+
+    setTimeout(() => statusBox.classList.remove("show"), 3000);
   }
 };
 
@@ -57,7 +100,7 @@ checkBtn.onclick = async () => {
    GESTIONE RISPOSTA CONTROLLO
 ===================================================== */
 function handleCheck(res) {
-   statusBox.classList.remove("show");
+  statusBox.classList.remove("show");
 
   if (!res || res.error) {
     icon.textContent = "⚠️";
@@ -88,49 +131,47 @@ function handleCheck(res) {
 
   suggestionsDiv.style.display = "block";
   suggestList.innerHTML = `
-   <div style="
-     font-size: 5vw;
-     font-weight: 700;
-     color: #ffcc00;
-     margin-bottom: 4vw;
-   ">
-   Modifica il tuo orario di richiesta
-   </div>
+    <div style="
+      font-size: 5vw;
+      font-weight: 700;
+      color: #ffcc00;
+      margin-bottom: 4vw;
+    ">
+      Modifica il tuo orario di richiesta
+    </div>
 
-   <button id="backToForm" style="
-     padding: 3vw 4vw;
-     font-size: 4.2vw;
-     font-weight: 600;
-     border-radius: 12px;
-     background: var(--primary);
-     color: white;
-     border: none;
-     width: 100%;
-     cursor: pointer;
-   ">
-   Ritorna alla prenotazione
-   </button>
+    <button id="backToForm" style="
+      padding: 3vw 4vw;
+      font-size: 4.2vw;
+      font-weight: 600;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+    ">
+      Ritorna alla prenotazione
+    </button>
   `;
 
-   document.getElementById("backToForm").onclick = () => {
-     suggestionsDiv.style.display = "none";
-     detailsPanel.style.display = "none";
+  const backBtn = document.getElementById("backToForm");
+  if (backBtn) {
+    backBtn.onclick = () => {
+      suggestionsDiv.style.display = "none";
+      detailsPanel.style.display = "none";
 
-  // Scroll morbido verso il form
-  document.getElementById("formContainer").scrollIntoView({
-    behavior: "smooth"
-  });
-};
-
-
-   
+      document.getElementById("formContainer").scrollIntoView({
+        behavior: "smooth"
+      });
+    };
+  }
 }
 
 /* =====================================================
    INVIO PRENOTAZIONE (APERTURA MODALE)
 ===================================================== */
 sendBtn.onclick = () => {
-
   const date = document.getElementById("date").value;
   const start = document.getElementById("start").value;
   const end = document.getElementById("end").value;
@@ -141,6 +182,12 @@ sendBtn.onclick = () => {
     `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
 
   confirmModal.style.display = "flex";
+
+  setTimeout(() => {
+    if (confirmModal.style.display === "flex") {
+      confirmModal.style.display = "none";
+    }
+  }, 15000);
 };
 
 /* =====================================================
@@ -178,17 +225,22 @@ confirmYes.onclick = async () => {
     if (r.success) {
       if (navigator.vibrate) navigator.vibrate(30);
 
-      const overlay = document.getElementById("loadingOverlay");
-      overlay.style.display = "flex";
-      overlay.style.pointerEvents = "auto";
-      setTimeout(() => overlay.classList.add("show"), 20);
+      loadingOverlay.style.display = "flex";
+      loadingOverlay.style.pointerEvents = "auto";
+      setTimeout(() => loadingOverlay.classList.add("show"), 20);
 
       setTimeout(() => {
-        overlay.classList.remove("show");
-        overlay.style.display = "none";
-        overlay.style.pointerEvents = "none";
+        loadingOverlay.classList.remove("show");
+        loadingOverlay.style.display = "none";
+        loadingOverlay.style.pointerEvents = "none";
         window.location.reload();
       }, 3000);
+
+      setTimeout(() => {
+        loadingOverlay.classList.remove("show");
+        loadingOverlay.style.display = "none";
+        loadingOverlay.style.pointerEvents = "none";
+      }, 7000);
 
     } else {
       alert("Errore: " + r.error);
@@ -208,7 +260,6 @@ confirmYes.onclick = async () => {
 ===================================================== */
 document.querySelectorAll("button").forEach(btn => {
   btn.addEventListener("click", function(e) {
-
     if (navigator.vibrate) navigator.vibrate(15);
 
     const rect = btn.getBoundingClientRect();
@@ -226,11 +277,24 @@ document.querySelectorAll("button").forEach(btn => {
 });
 
 /* =====================================================
-   SERVICE WORKER (PWA)
+   MENU LATERALE POSTAZIONI
 ===================================================== */
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("?sw");
-}
+window.addEventListener("load", () => {
+  const menu = document.getElementById("postazioniMenu");
+  const openBtn = document.getElementById("openPostazioni");
+  const closeBtn = document.getElementById("closePostazioni");
+  const list = document.getElementById("postazioniList");
+
+  list.innerHTML = POSTAZIONI.map(p => `
+    <div>
+      <strong>${p.nome}</strong><br>
+      <a href="${mapLink(p.lat, p.lon)}" target="_blank">Apri sulla mappa</a>
+    </div>
+  `).join("");
+
+  openBtn.onclick = () => menu.classList.add("show");
+  closeBtn.onclick = () => menu.classList.remove("show");
+});
 
 /* =====================================================
    SCROLL AUTOMATICO AL RIEPILOGO DOPO RELOAD
@@ -313,4 +377,7 @@ function formattaData(d) {
 /* =====================================================
    CARICAMENTO AUTOMATICO RIEPILOGO
 ===================================================== */
-window.addEventListener("load", caricaRiepilogo);
+window.addEventListener("load", () => {
+  resetUI();
+  caricaRiepilogo();
+});
