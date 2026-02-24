@@ -281,7 +281,7 @@ button.ripple-active::after {
 #postazioniMenu {
   position: fixed;
   top: 0;
-  right: -80vw; /* nascosto */
+  right: -100vw; /* completamente fuori dallo schermo */
   width: 80vw;
   height: 100vh;
   background: var(--card-bg);
