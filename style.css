@@ -171,19 +171,16 @@ button.secondary {
 
 /* MENU POSTAZIONI */
 #postazioniMenu {
-  position: fixed;
+  position: absolute;   /* ← ora fa parte del body */
   top: 0;
   right: -100%;
   width: 80vw;
-  bottom: 0;               /* ← invece di height */
-  overflow-y: auto;        /* ← scroll solo quando serve */
   background: #fff;
   padding: 4vw;
   border-left: 1px solid #ccc;
   transition: right 0.35s ease;
   z-index: 9999;
 }
-
 
 #postazioniMenu.show {
   right: 0;
