@@ -175,15 +175,15 @@ button.secondary {
   top: 0;
   right: -100%;
   width: 80vw;
-  height: 100%; /* ✔ si adatta al contenuto, niente scroll interno */
-  max-height: 100vh; /* ✔ evita overflow */
-  overflow-y: auto; /* ✔ scorre solo quando serve */
+  bottom: 0;               /* ← invece di height */
+  overflow-y: auto;        /* ← scroll solo quando serve */
   background: #fff;
   padding: 4vw;
   border-left: 1px solid #ccc;
   transition: right 0.35s ease;
   z-index: 9999;
 }
+
 
 #postazioniMenu.show {
   right: 0;
