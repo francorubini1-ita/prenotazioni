@@ -18,7 +18,7 @@ const POSTAZIONI = [
 ];
 
 function mapLink(lat, lon) {
-  return `https://www.google.com/maps/@${lat},${lon},20z`;
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
 }
 
 
