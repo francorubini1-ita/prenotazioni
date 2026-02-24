@@ -18,9 +18,8 @@ const POSTAZIONI = [
 ];
 
 function mapLink(lat, lon) {
-  return `https://www.google.com/maps/@${lat},${lon},20z/data=!3m1!1e3`;
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
 }
-
 
 /* =====================================================
    RIFERIMENTI AGLI ELEMENTI DEL DOM
@@ -39,6 +38,33 @@ const confirmText = document.getElementById("confirmText");
 const confirmYes = document.getElementById("confirmYes");
 const confirmNo = document.getElementById("confirmNo");
 const loadingOverlay = document.getElementById("loadingOverlay");
+
+/* =====================================================
+   CONTROLLO ORARI (IN TEMPO REALE)
+===================================================== */
+const startInput = document.getElementById("start");
+const endInput = document.getElementById("end");
+
+function controllaOrari() {
+  const start = startInput.value;
+  const end = endInput.value;
+
+  if (!start || !end) {
+    endInput.classList.remove("input-error");
+    return false;
+  }
+
+  if (end <= start) {
+    endInput.classList.add("input-error");
+    return true;
+  }
+
+  endInput.classList.remove("input-error");
+  return false;
+}
+
+startInput.addEventListener("change", controllaOrari);
+endInput.addEventListener("change", controllaOrari);
 
 /* =====================================================
    FUNZIONE DI RESET UI
@@ -71,11 +97,16 @@ checkBtn.onclick = async () => {
   document.activeElement.blur();
 
   const date = document.getElementById("date").value;
-  const start = document.getElementById("start").value;
-  const end = document.getElementById("end").value;
+  const start = startInput.value;
+  const end = endInput.value;
 
   if (!date || !start || !end) {
     alert("Compila la data e gli orari");
+    return;
+  }
+
+  if (controllaOrari()) {
+    alert("L'orario di fine deve essere successivo all'orario di inizio.");
     return;
   }
 
@@ -162,7 +193,7 @@ function handleCheck(res) {
       suggestionsDiv.style.display = "none";
       detailsPanel.style.display = "none";
 
-      document.getElementById("formContainer").scrollIntoView({
+      document.getElementById("formContainer")?.scrollIntoView({
         behavior: "smooth"
       });
     };
@@ -174,10 +205,15 @@ function handleCheck(res) {
 ===================================================== */
 sendBtn.onclick = () => {
   const date = document.getElementById("date").value;
-  const start = document.getElementById("start").value;
-  const end = document.getElementById("end").value;
+  const start = startInput.value;
+  const end = endInput.value;
   const name = document.getElementById("name").value;
   const postazione = document.getElementById("postazione").value;
+
+  if (controllaOrari()) {
+    alert("L'orario di fine deve essere successivo all'orario di inizio.");
+    return;
+  }
 
   confirmText.textContent =
     `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
@@ -202,6 +238,14 @@ confirmNo.onclick = () => {
    CONFERMA INVIO PRENOTAZIONE
 ===================================================== */
 confirmYes.onclick = async () => {
+
+  if (controllaOrari()) {
+    alert("L'orario di fine deve essere successivo all'orario di inizio.");
+    confirmYes.disabled = false;
+    confirmYes.style.opacity = "1";
+    return;
+  }
+
   confirmYes.disabled = true;
   confirmYes.style.opacity = "0.5";
   confirmModal.style.display = "none";
@@ -209,8 +253,8 @@ confirmYes.onclick = async () => {
   const data = {
     action: "submit",
     date: document.getElementById("date").value,
-    start: document.getElementById("start").value,
-    end: document.getElementById("end").value,
+    start: startInput.value,
+    end: endInput.value,
     name: document.getElementById("name").value,
     postazione: document.getElementById("postazione").value
   };
