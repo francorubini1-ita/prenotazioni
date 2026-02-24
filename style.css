@@ -317,18 +317,3 @@ button.ripple-active::after {
   font-size: 4vw;
 }
 
-/* ===========================
-   PULSANTE GALLEGGIANTE
-=========================== */
-//* .floating-btn {
-//*  position: fixed;
-//*  bottom: 4vw;
-//*  right: 4vw;
-//*  z-index: 999;
-//*  width: auto;
-//*  padding: 3vw 4vw;
-//*  font-size: 4vw;
-//*  border-radius: 12px;
-//*  background: var(--primary);
-//*  color: white;
-//* }
