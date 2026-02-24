@@ -52,7 +52,7 @@
 }
 
 .titolo-sottile {
-  font-size: 4vw;
+  font-size: 5vw;
   font-weight: 500;
   color: #444;
   margin-top: 1vw;
@@ -62,7 +62,7 @@
 body {
   margin: 0;
   overflow-y: auto;
-  padding-top: 22vw; /* spazio per il titolo fisso */
+  padding-top: 24vw; /* spazio per il titolo fisso */
   -webkit-overflow-scrolling: touch;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
   background: var(--bg);
