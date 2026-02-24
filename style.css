@@ -4,9 +4,17 @@ html, body {
   padding: 0;
   max-width: 100%;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
   background: #f5f7fa;
   color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+}
+
+/* TUTTO FULL WIDTH */
+section#prenotazione-espositore {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* TITOLI */
@@ -201,4 +209,3 @@ button.secondary {
   border-radius: 12px;
   border: none;
 }
-
