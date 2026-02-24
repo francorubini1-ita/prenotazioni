@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>Prenotazione Espositore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,96 +13,124 @@
 
 <section id="prenotazione-espositore">
 
-  <h1 class="page-title">Prenotazione Espositore</h1>
+  <div id="app">
 
-  <!-- FORM -->
-  <div class="field">
-    <label class="field-label" for="date">Data</label>
-    <input class="field-input" type="date" id="date">
-  </div>
+    <div class="app-header">Prenotazione Espositore</div>
 
-  <div class="field time-row">
-    <div class="time-col">
-      <label class="field-label" for="start">Inizio</label>
-      <input class="field-input" type="time" id="start">
+    <div class="card">
+
+      <div class="field">
+        <label class="field-label" for="date">Data</label>
+        <input class="field-input" type="date" id="date">
+      </div>
+
+      <div class="field time-row">
+        <div class="time-col">
+          <label class="field-label" for="start">Inizio</label>
+          <div class="time-inner">
+            <span class="emoji">⏱</span>
+            <input class="field-input" type="time" id="start">
+          </div>
+        </div>
+
+        <div class="time-col">
+          <label class="field-label" for="end">Fine</label>
+          <div class="time-inner">
+            <span class="emoji">⏱</span>
+            <input class="field-input" type="time" id="end">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="name">Nome</label>
+        <input class="field-input" type="text" id="name">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="postazione">Postazione</label>
+        <select class="field-input" id="postazione">
+          <option value="1">Postazione 1</option>
+          <option value="2">Postazione 2</option>
+          <option value="3">Postazione 3</option>
+          <option value="4">Postazione 4</option>
+          <option value="5">Postazione 5</option>
+          <option value="6">Postazione 6</option>
+          <option value="7">Postazione 7</option>
+          <option value="8">Postazione 8</option>
+        </select>
+      </div>
+
+      <button id="openPostazioni" class="postazioni-inline-btn">
+        📍 Dove sono le postazioni?
+      </button>
+      
     </div>
 
-    <div class="time-col">
-      <label class="field-label" for="end">Fine</label>
-      <input class="field-input" type="time" id="end">
+    <!-- STATUS -->
+    <div id="status">
+      <span id="icon" class="icon"></span>
+      <span id="msg"></span>
     </div>
-  </div>
 
-  <div class="field">
-    <label class="field-label" for="name">Nome</label>
-    <input class="field-input" type="text" id="name">
-  </div>
+    <!-- PANNELLI -->
+    <div id="formContainer">
 
-  <div class="field">
-    <label class="field-label" for="postazione">Postazione</label>
-    <select class="field-input" id="postazione">
-      <option value="1">Postazione 1</option>
-      <option value="2">Postazione 2</option>
-      <option value="3">Postazione 3</option>
-      <option value="4">Postazione 4</option>
-      <option value="5">Postazione 5</option>
-      <option value="6">Postazione 6</option>
-      <option value="7">Postazione 7</option>
-      <option value="8">Postazione 8</option>
-    </select>
+      <div id="detailsPanel">
+        <strong>Conflitti trovati</strong>
+        <ul id="conflictList"></ul>
+      </div>
 
-    <button id="openPostazioni" class="postazioni-inline-btn">
-      📍 Dove sono le postazioni?
-    </button>
-  </div>
+      <div id="suggestions">
+        <div id="suggestList"></div>
+      </div>
 
-  <button id="check">Controlla la disponibilità</button>
-  <button id="send" disabled>Invia una prenotazione</button>
+      <button id="check">Controlla la disponibilità</button>
+      <button id="send" disabled>Invia una prenotazione</button>
 
-  <!-- STATUS -->
-  <div id="status">
-    <span id="icon"></span>
-    <span id="msg"></span>
-  </div>
-
-  <!-- PANNELLI -->
-  <div id="detailsPanel">
-    <strong>Conflitti trovati</strong>
-    <ul id="conflictList"></ul>
-  </div>
-
-  <div id="suggestions">
-    <div id="suggestList"></div>
-  </div>
-
-  <!-- RIEPILOGO -->
-  <h2 class="title">Riepilogo prenotazioni</h2>
-  <button onclick="caricaRiepilogo()" class="update-btn">Aggiorna</button>
-  <div id="riepilogo"></div>
-
-  <!-- MODALE -->
-  <div id="confirmModal">
-    <div id="confirmBox">
-      <p id="confirmText"></p>
-      <button id="confirmYes" class="yes">Conferma</button>
-      <button id="confirmNo" class="secondary">Annulla</button>
     </div>
-  </div>
 
-  <!-- OVERLAY -->
-  <div id="loadingOverlay">Prenotazione inviata…</div>
+    <!-- RIEPILOGO -->
+    <h3 class="title">Riepilogo prenotazioni</h3>
 
-  <!-- MENU POSTAZIONI -->
-  <div id="postazioniMenu">
-    <div id="postazioniHeader">
-      <strong>Postazioni</strong>
-      <button id="closePostazioni" class="secondary">Chiudi</button>
+    <div class="update-wrap">
+      <button onclick="caricaRiepilogo()">Aggiorna</button>
     </div>
-    <div id="postazioniList"></div>
+
+    <div id="riepilogo"></div>
+
+    <!-- MODALE -->
+    <div id="confirmModal">
+      <div id="confirmBox">
+        <p id="confirmText"></p>
+        <button id="confirmYes" class="yes">Conferma</button>
+        <button id="confirmNo" class="secondary">Annulla</button>
+      </div>
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="loadingOverlay">Prenotazione inviata…</div>
+
+    <!-- MENU LATERALE POSTAZIONI -->
+    <div id="postazioniMenu">
+      <div id="postazioniHeader">
+        <strong>Postazioni</strong>
+        <button id="closePostazioni" class="secondary" style="width:auto;padding:2vw 3vw;font-size:4vw;">Chiudi</button>
+      </div>
+      <div id="postazioniList"></div>
+    </div>
+
   </div>
 
 </section>
 
+<!-- JS -->
 <script src="app.js"></script>
+
 </body>
 </html>
+
+
+
+
+
