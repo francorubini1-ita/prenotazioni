@@ -293,8 +293,8 @@ window.addEventListener("load", () => {
     </div>
   `).join("");
 
-  openBtn.onclick = () => menu.style.display = "block";
-  closeBtn.onclick = () => menu.style.display = "none";
+  openBtn.onclick = () => menu.classList.add("show");
+  closeBtn.onclick = () => menu.classList.remove("show");
 });
 
 /* =====================================================
