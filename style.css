@@ -1,22 +1,23 @@
 /* RESET E BASE */
 html, body {
-  overflow-y: auto !important;
-  height: auto !important;
   margin: 0;
   padding: 0;
+  width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
   background: #f5f7fa;
   color: #222;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
 }
 
-/* TUTTO FULL WIDTH */
+/* CONTENUTO PRINCIPALE */
 section#prenotazione-espositore {
   width: 100%;
   max-width: 100%;
   padding: 0;
   margin: 0;
+  overflow-y: visible !important;   /* ⭐ elimina il secondo scroll */
 }
 
 /* TITOLI */
