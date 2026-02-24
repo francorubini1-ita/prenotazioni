@@ -33,6 +33,24 @@
 /* ===========================
    STRUTTURA BASE
 =========================== */
+#appTitle {
+  text-align: center;
+  padding: 6vw 0 4vw 0;
+}
+
+.titolo-grande {
+  font-size: 6vw;
+  font-weight: 600;
+  color: #0066ff;
+}
+
+.titolo-sottile {
+  font-size: 4.5vw;
+  font-weight: 500;
+  color: #444;
+  margin-top: 1vw;
+}
+
 body {
   margin: 0;
   overflow-y: auto;
