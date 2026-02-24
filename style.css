@@ -190,13 +190,13 @@ button.ripple-active::after {
    PANNELLI
 =========================== */
 #formContainer {
-  background: #000;
-  color: #fff;
-  padding: 4vw;
-  margin: 4vw;
-  border: 1px solid var(--ios-border);
-  border-radius: 12px;
+  padding: 4vw 4vw 8vw 4vw;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: var(--text);
 }
+
 
 #detailsPanel,
 #suggestions {
