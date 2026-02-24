@@ -1,6 +1,11 @@
 /* ===========================
    VARIABILI GLOBALI
 =========================== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 :root {
   --label-size: 5vw;
   --input-size: 4vw;
