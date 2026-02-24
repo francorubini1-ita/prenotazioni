@@ -7,7 +7,7 @@ const API = "https://script.google.com/macros/s/AKfycbw1PkamNFSLC_VTRaNZh8FVkYmq
    POSTAZIONI + LINK MAPPA
 ===================================================== */
 const POSTAZIONI = [
-  { id: 1, nome: "Postazione 1", lat: 44.574642, lon: 11.363446 },
+  { id: 1, nome: "Postazione 1", lat: 44.574728, lon: 11.363502 },
   { id: 2, nome: "Postazione 2", lat: 44.577320, lon: 11.361661 },
   { id: 3, nome: "Postazione 3", lat: 44.577225, lon: 11.358206 },
   { id: 4, nome: "Postazione 4", lat: 44.558822, lon: 11.355390 },
