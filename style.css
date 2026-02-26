@@ -45,7 +45,7 @@ body {
 #prenotazione-espositore {
   background: var(--bg);
   color: var(--text);
-  padding-bottom: 10vw;
+  padding-bottom: 1vw;
 }
 
 .app-header {
