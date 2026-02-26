@@ -18,8 +18,9 @@ const POSTAZIONI = [
 ];
 
 function mapLink(lat, lon) {
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+  return `https://www.google.com/maps/@${lat},${lon},20z/data=!3m1!1e3`;
 }
+
 
 /* =====================================================
    RIFERIMENTI AGLI ELEMENTI DEL DOM
@@ -66,6 +67,8 @@ function controllaOrari() {
 startInput.addEventListener("change", controllaOrari);
 endInput.addEventListener("change", controllaOrari);
 
+
+
 /* =====================================================
    FUNZIONE DI RESET UI
 ===================================================== */
@@ -97,15 +100,15 @@ checkBtn.onclick = async () => {
   document.activeElement.blur();
 
   const date = document.getElementById("date").value;
-  const start = startInput.value;
-  const end = endInput.value;
+  const start = document.getElementById("start").value;
+  const end = document.getElementById("end").value;
 
   if (!date || !start || !end) {
     alert("Compila la data e gli orari");
     return;
   }
 
-  if (controllaOrari()) {
+if (controllaOrari()) {
     alert("L'orario di fine deve essere successivo all'orario di inizio.");
     return;
   }
@@ -193,7 +196,7 @@ function handleCheck(res) {
       suggestionsDiv.style.display = "none";
       detailsPanel.style.display = "none";
 
-      document.getElementById("formContainer")?.scrollIntoView({
+      document.getElementById("formContainer").scrollIntoView({
         behavior: "smooth"
       });
     };
@@ -205,15 +208,10 @@ function handleCheck(res) {
 ===================================================== */
 sendBtn.onclick = () => {
   const date = document.getElementById("date").value;
-  const start = startInput.value;
-  const end = endInput.value;
+  const start = document.getElementById("start").value;
+  const end = document.getElementById("end").value;
   const name = document.getElementById("name").value;
   const postazione = document.getElementById("postazione").value;
-
-  if (controllaOrari()) {
-    alert("L'orario di fine deve essere successivo all'orario di inizio.");
-    return;
-  }
 
   confirmText.textContent =
     `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
@@ -238,14 +236,6 @@ confirmNo.onclick = () => {
    CONFERMA INVIO PRENOTAZIONE
 ===================================================== */
 confirmYes.onclick = async () => {
-
-  if (controllaOrari()) {
-    alert("L'orario di fine deve essere successivo all'orario di inizio.");
-    confirmYes.disabled = false;
-    confirmYes.style.opacity = "1";
-    return;
-  }
-
   confirmYes.disabled = true;
   confirmYes.style.opacity = "0.5";
   confirmModal.style.display = "none";
@@ -253,8 +243,8 @@ confirmYes.onclick = async () => {
   const data = {
     action: "submit",
     date: document.getElementById("date").value,
-    start: startInput.value,
-    end: endInput.value,
+    start: document.getElementById("start").value,
+    end: document.getElementById("end").value,
     name: document.getElementById("name").value,
     postazione: document.getElementById("postazione").value
   };
