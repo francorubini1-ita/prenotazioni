@@ -67,34 +67,48 @@ startInput.addEventListener("change", controllaOrari);
 endInput.addEventListener("change", controllaOrari);
 
 /* =====================================================
-   CONTROLLO ORARIO NEL PASSATO
+   NUOVO CONTROLLO: DATA PASSATA + ORA FINE < ORA INIZIO
 ===================================================== */
-function controllaOrarioPassato() {
-  const oggi = document.getElementById("date").value;
+function controllaErroriTemporali() {
+  const oggi = new Date();
+  oggi.setHours(0,0,0,0);
+
+  const date = document.getElementById("date").value;
   const start = document.getElementById("start").value;
+  const end = document.getElementById("end").value;
 
-  if (!oggi || !start) {
-    document.getElementById("labelStart").classList.remove("label-error");
-    return false;
-  }
+  let errore = false;
 
-  const now = new Date();
-  const [y, m, d] = oggi.split("-");
-  const [hh, mm] = start.split(":");
-
-  const dataPrenotazione = new Date(y, m - 1, d, hh, mm);
-
-  if (dataPrenotazione < now) {
-    document.getElementById("labelStart").classList.add("label-error");
-    return true;
-  }
-
+  // Reset label
+  document.getElementById("labelDate").classList.remove("label-error");
   document.getElementById("labelStart").classList.remove("label-error");
-  return false;
+  document.getElementById("labelEnd").classList.remove("label-error");
+
+  // --- Controllo data nel passato ---
+  if (date) {
+    const [y, m, d] = date.split("-");
+    const dataSelezionata = new Date(y, m - 1, d);
+
+    if (dataSelezionata < oggi) {
+      document.getElementById("labelDate").classList.add("label-error");
+      errore = true;
+    }
+  }
+
+  // --- Controllo ora fine < ora inizio ---
+  if (start && end) {
+    if (end <= start) {
+      document.getElementById("labelEnd").classList.add("label-error");
+      errore = true;
+    }
+  }
+
+  return errore;
 }
 
-startInput.addEventListener("change", controllaOrarioPassato);
-document.getElementById("date").addEventListener("change", controllaOrarioPassato);
+document.getElementById("date").addEventListener("change", controllaErroriTemporali);
+startInput.addEventListener("change", controllaErroriTemporali);
+endInput.addEventListener("change", controllaErroriTemporali);
 
 /* =====================================================
    FUNZIONE DI RESET UI
@@ -140,8 +154,8 @@ checkBtn.onclick = async () => {
     return;
   }
 
-  if (controllaOrarioPassato()) {
-    alert("Non puoi prenotare un orario precedente all'ora attuale.");
+  if (controllaErroriTemporali()) {
+    alert("Controlla data e orari: ci sono errori.");
     return;
   }
 
@@ -250,8 +264,8 @@ sendBtn.onclick = () => {
     return;
   }
 
-  if (controllaOrarioPassato()) {
-    alert("Non puoi prenotare un orario precedente all'ora attuale.");
+  if (controllaErroriTemporali()) {
+    alert("Controlla data e orari: ci sono errori.");
     return;
   }
 
@@ -286,8 +300,8 @@ confirmYes.onclick = async () => {
     return;
   }
 
-  if (controllaOrarioPassato()) {
-    alert("Non puoi prenotare un orario precedente all'ora attuale.");
+  if (controllaErroriTemporali()) {
+    alert("Controlla data e orari: ci sono errori.");
     confirmYes.disabled = false;
     confirmYes.style.opacity = "1";
     return;
