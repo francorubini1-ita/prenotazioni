@@ -41,11 +41,10 @@
   background: #ffffff;
   text-align: center;
   padding: 4vw 0 3vw 0;
-  z-index: 9999;
-  border-bottom: 1px solid #ddd;
+  z-index: 999999; /* SUPER ALTO, così non sparisce */
 
-  /* ⭐ Ombra morbida */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* ombra morbida */
 }
 
 .titolo-grande {
@@ -61,9 +60,9 @@
   margin-top: 1vw;
 }
 
-/* Spazio per evitare sovrapposizione */
+/* Spazio per evitare che il contenuto finisca sotto il titolo */
 body {
-  padding-top: 22vw;
+  padding-top: 24vw; /* aumentato per sicurezza */
 }
 
 body {
