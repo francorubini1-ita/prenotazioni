@@ -2,7 +2,6 @@
    VARIABILI GLOBALI
 =========================== */
 :root {
-    color-scheme: light dark;
   --label-size: 5vw;
   --input-size: 4vw;
   --input-padding: 3vw;
@@ -20,44 +19,23 @@
   --ios-border: #d1d1d6;
 }
 
-/* ===========================
-   INTESTAZIONE FISSA
-=========================== */
-#appTitle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #ffffff;
-  text-align: center;
-  padding: 4vw 0 3vw 0;
-  z-index: 999999; /* sempre sopra tutto */
-  border-bottom: 1px solid #ddd;
-
-  /* Ombra morbida */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.titolo-grande {
-  font-size: 7.5vw;
-  font-weight: 800;
-  color: #0066ff;
-}
-
-.titolo-sottile {
-  font-size: 4vw;
-  font-weight: 500;
-  color: #444;
-  margin-top: 1vw;
+/* Tema scuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --card-bg: #2c2c2e;
+    --text: #f2f2f7;
+    --shadow: 0 6px 18px rgba(0,0,0,0.6);
+    --ios-border: #3a3a3c;
+  }
 }
 
 /* ===========================
-   BODY (UNIFICATO)
+   STRUTTURA BASE
 =========================== */
 body {
   margin: 0;
   overflow-y: auto;
-  padding-top: 24vw; /* spazio per il titolo fisso */
   -webkit-overflow-scrolling: touch;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
   background: var(--bg);
