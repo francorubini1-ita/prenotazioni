@@ -67,6 +67,36 @@ startInput.addEventListener("change", controllaOrari);
 endInput.addEventListener("change", controllaOrari);
 
 /* =====================================================
+   CONTROLLO ORARIO NEL PASSATO
+===================================================== */
+function controllaOrarioPassato() {
+  const oggi = document.getElementById("date").value;
+  const start = document.getElementById("start").value;
+
+  if (!oggi || !start) {
+    document.getElementById("labelStart").classList.remove("label-error");
+    return false;
+  }
+
+  const now = new Date();
+  const [y, m, d] = oggi.split("-");
+  const [hh, mm] = start.split(":");
+
+  const dataPrenotazione = new Date(y, m - 1, d, hh, mm);
+
+  if (dataPrenotazione < now) {
+    document.getElementById("labelStart").classList.add("label-error");
+    return true;
+  }
+
+  document.getElementById("labelStart").classList.remove("label-error");
+  return false;
+}
+
+startInput.addEventListener("change", controllaOrarioPassato);
+document.getElementById("date").addEventListener("change", controllaOrarioPassato);
+
+/* =====================================================
    FUNZIONE DI RESET UI
 ===================================================== */
 function resetUI() {
@@ -107,6 +137,11 @@ checkBtn.onclick = async () => {
 
   if (controllaOrari()) {
     alert("L'orario di fine deve essere successivo all'orario di inizio.");
+    return;
+  }
+
+  if (controllaOrarioPassato()) {
+    alert("Non puoi prenotare un orario precedente all'ora attuale.");
     return;
   }
 
@@ -215,6 +250,11 @@ sendBtn.onclick = () => {
     return;
   }
 
+  if (controllaOrarioPassato()) {
+    alert("Non puoi prenotare un orario precedente all'ora attuale.");
+    return;
+  }
+
   confirmText.textContent =
     `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
 
@@ -241,6 +281,13 @@ confirmYes.onclick = async () => {
 
   if (controllaOrari()) {
     alert("L'orario di fine deve essere successivo all'orario di inizio.");
+    confirmYes.disabled = false;
+    confirmYes.style.opacity = "1";
+    return;
+  }
+
+  if (controllaOrarioPassato()) {
+    alert("Non puoi prenotare un orario precedente all'ora attuale.");
     confirmYes.disabled = false;
     confirmYes.style.opacity = "1";
     return;
