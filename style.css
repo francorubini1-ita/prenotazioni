@@ -2,7 +2,8 @@
    VARIABILI GLOBALI
 =========================== */
 :root {
-    color-scheme: light dark;
+  color-scheme: light dark;
+
   --label-size: 5vw;
   --input-size: 4vw;
   --input-padding: 3vw;
@@ -21,6 +22,14 @@
 }
 
 /* ===========================
+   LABEL ERROR
+=========================== */
+.label-error {
+  color: red !important;
+  font-weight: 700;
+}
+
+/* ===========================
    INTESTAZIONE FISSA
 =========================== */
 #appTitle {
@@ -31,11 +40,9 @@
   background: #ffffff;
   text-align: center;
   padding: 4vw 0 3vw 0;
-  z-index: 999999; /* sempre sopra tutto */
-  border-bottom: 1px solid #ddd;
-
-  /* Ombra morbida */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 999999;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
 .titolo-grande {
@@ -64,6 +71,9 @@ body {
   color: var(--text);
 }
 
+/* ===========================
+   STRUTTURA BASE
+=========================== */
 #prenotazione-espositore {
   background: var(--bg);
   color: var(--text);
@@ -302,8 +312,9 @@ button.ripple-active::after {
 =========================== */
 #postazioniMenu {
   position: fixed;
+  padding-top: 24vw; /* stessa altezza dell’intestazione fissa */
   top: 0;
-  right: -100vw; /* completamente fuori dallo schermo */
+  right: -100vw;
   width: 80vw;
   height: 100vh;
   background: var(--card-bg);
@@ -338,4 +349,3 @@ button.ripple-active::after {
   text-decoration: underline;
   font-size: 4vw;
 }
-
