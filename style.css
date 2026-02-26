@@ -2,6 +2,7 @@
    VARIABILI GLOBALI
 =========================== */
 :root {
+    color-scheme: light dark;
   --label-size: 5vw;
   --input-size: 4vw;
   --input-padding: 3vw;
