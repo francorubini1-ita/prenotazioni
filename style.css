@@ -43,6 +43,9 @@
   padding: 4vw 0 3vw 0;
   z-index: 9999;
   border-bottom: 1px solid #ddd;
+
+  /* ⭐ Ombra morbida */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .titolo-grande {
@@ -52,12 +55,16 @@
 }
 
 .titolo-sottile {
-  font-size: 5vw;
+  font-size: 4vw;
   font-weight: 500;
   color: #444;
   margin-top: 1vw;
 }
 
+/* Spazio per evitare sovrapposizione */
+body {
+  padding-top: 22vw;
+}
 
 body {
   margin: 0;
