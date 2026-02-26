@@ -67,50 +67,6 @@ startInput.addEventListener("change", controllaOrari);
 endInput.addEventListener("change", controllaOrari);
 
 /* =====================================================
-   NUOVO CONTROLLO: DATA PASSATA + ORA FINE < ORA INIZIO
-===================================================== */
-function controllaErroriTemporali() {
-  const oggi = new Date();
-  oggi.setHours(0,0,0,0);
-
-  const date = document.getElementById("date").value;
-  const start = document.getElementById("start").value;
-  const end = document.getElementById("end").value;
-
-  let errore = false;
-
-  // Reset label
-  document.getElementById("labelDate").classList.remove("label-error");
-  document.getElementById("labelStart").classList.remove("label-error");
-  document.getElementById("labelEnd").classList.remove("label-error");
-
-  // --- Controllo data nel passato ---
-  if (date) {
-    const [y, m, d] = date.split("-");
-    const dataSelezionata = new Date(y, m - 1, d);
-
-    if (dataSelezionata < oggi) {
-      document.getElementById("labelDate").classList.add("label-error");
-      errore = true;
-    }
-  }
-
-  // --- Controllo ora fine < ora inizio ---
-  if (start && end) {
-    if (end <= start) {
-      document.getElementById("labelEnd").classList.add("label-error");
-      errore = true;
-    }
-  }
-
-  return errore;
-}
-
-document.getElementById("date").addEventListener("change", controllaErroriTemporali);
-startInput.addEventListener("change", controllaErroriTemporali);
-endInput.addEventListener("change", controllaErroriTemporali);
-
-/* =====================================================
    FUNZIONE DI RESET UI
 ===================================================== */
 function resetUI() {
@@ -151,11 +107,6 @@ checkBtn.onclick = async () => {
 
   if (controllaOrari()) {
     alert("L'orario di fine deve essere successivo all'orario di inizio.");
-    return;
-  }
-
-  if (controllaErroriTemporali()) {
-    alert("Controlla data e orari: ci sono errori.");
     return;
   }
 
@@ -264,11 +215,6 @@ sendBtn.onclick = () => {
     return;
   }
 
-  if (controllaErroriTemporali()) {
-    alert("Controlla data e orari: ci sono errori.");
-    return;
-  }
-
   confirmText.textContent =
     `${date.split("-").reverse().join("/")} ${start}–${end} — ${name} (Postazione ${postazione})`;
 
@@ -295,13 +241,6 @@ confirmYes.onclick = async () => {
 
   if (controllaOrari()) {
     alert("L'orario di fine deve essere successivo all'orario di inizio.");
-    confirmYes.disabled = false;
-    confirmYes.style.opacity = "1";
-    return;
-  }
-
-  if (controllaErroriTemporali()) {
-    alert("Controlla data e orari: ci sono errori.");
     confirmYes.disabled = false;
     confirmYes.style.opacity = "1";
     return;
