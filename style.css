@@ -92,7 +92,7 @@ button {
 
 #check { background: var(--primary); color: white; margin: 10px 15px; width: calc(100% - 30px); }
 #send { background: var(--success); color: white; margin: 15px; width: calc(100% - 30px); }
-#send:disabled { opacity: 0.3; }
+#send:disabled { background: var(--error) !important; color: white !important; opacity: 0.6; cursor: not-allowed; }
 
 .secondary { background: var(--ios-border); color: var(--text); }
 
@@ -219,3 +219,9 @@ button {
 
 .label-error { color: var(--error) !important; animation: shake 0.4s; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+
+
+
+
+
