@@ -92,7 +92,7 @@ button {
 
 #check { background: var(--primary); color: white; margin: 10px 15px; width: calc(100% - 30px); }
 #send { background: var(--success); color: white; margin: 15px; width: calc(100% - 30px); }
-#send:disabled { background: var(--error) !important; color: white !important; opacity: 0.6; cursor: not-allowed; }
+button#send:disabled, #send[disabled] { background: var(--error) !important; color: white !important; opacity: 0.6 !important; cursor: not-allowed; }
 
 .secondary { background: var(--ios-border); color: var(--text); }
 
